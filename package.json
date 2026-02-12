@@ -1,14 +1,33 @@
 {
-  "name": "my-project",
-  "version": "0.1.0",
+  "name": "a1-super-genius-core",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "core:diagnosis": "python scripts/self_diagnosis.py",
+    "core:bridge": "python scripts/universal_bridge.py",
+    "core:freeze": "kill-port 3000 && python scripts/system_freeze.py"
   },
   "dependencies": {
+    "next": "16.1.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "lucide-react": "^0.544.0",
+    "framer-motion": "^11.15.0",
+    "recharts": "2.15.0",
+    
+    /* --- SUPER GENIUS AI CORE ADDITIONS --- */
+    "axios": "^1.7.0", 
+    "zustand": "^4.5.0",
+    "socket.io-client": "^4.7.0",
+    "ai": "^3.0.0",
+    "onnxruntime-web": "^1.19.0",
+    "langchain": "^0.1.0",
+    /* -------------------------------------- */
+
     "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-accordion": "1.2.2",
     "@radix-ui/react-alert-dialog": "1.1.4",
@@ -44,16 +63,10 @@
     "date-fns": "4.1.0",
     "embla-carousel-react": "8.5.1",
     "input-otp": "1.4.1",
-    "lucide-react": "^0.544.0",
-    "next": "16.1.6",
     "next-themes": "^0.4.6",
-    "react": "19.2.3",
     "react-day-picker": "8.10.1",
-    "react-dom": "19.2.3",
     "react-hook-form": "^7.54.1",
     "react-resizable-panels": "^2.1.7",
-    "framer-motion": "^11.15.0",
-    "recharts": "2.15.0",
     "sonner": "^1.7.1",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
@@ -67,12 +80,7 @@
     "@types/react-dom": "19.2.3",
     "postcss": "^8.5",
     "tailwindcss": "^3.4.17",
-    "typescript": "5.7.3"
-  },
-  "pnpm": {
-    "overrides": {
-      "@types/react": "19.2.7",
-      "@types/react-dom": "19.2.3"
-    }
+    "typescript": "5.7.3",
+    "kill-port": "^2.0.1"
   }
 }
