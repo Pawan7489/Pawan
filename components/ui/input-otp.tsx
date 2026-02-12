@@ -98,4 +98,3 @@ const InputOTPSeparator = React.forwardRef<
 ))
 
 export { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator }
-  
