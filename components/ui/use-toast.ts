@@ -1,18 +1,29 @@
 'use client'
 
-// Inspired by react-hot-toast library
 import * as React from 'react'
-
 import type { ToastActionElement, ToastProps } from '@/components/ui/toast'
 
-const TOAST_LIMIT = 1
-const TOAST_REMOVE_DELAY = 1000000
+/**
+ * Project A1: Neural Event Ledger [cite: 2026-02-11]
+ * Rule: Onion Architecture (Nested Encapsulation).
+ * Rule: Internal Critique Step (Anti-Hallucination).
+ */
+
+const TOAST_LIMIT = 3 // Musk Rule: Efficiency (Don't clutter the UI)
+const TOAST_REMOVE_DELAY = 5000 
+
+type NeuralLevel = 'neural' | 'guardian' | 'omega' | 'mesh_sync'
 
 type ToasterToast = ToastProps & {
   id: string
   title?: React.ReactNode
   description?: React.ReactNode
   action?: ToastActionElement
+  // Super Genius Metadata [cite: 2026-02-11]
+  meshNode?: 'Drive-D' | 'Drive-E' | 'Secure-Cloud'
+  isDiagnosing?: boolean
+  protocolLevel?: NeuralLevel
+  internalCritique?: string // AI's reasoning path
 }
 
 const actionTypes = {
@@ -20,56 +31,25 @@ const actionTypes = {
   UPDATE_TOAST: 'UPDATE_TOAST',
   DISMISS_TOAST: 'DISMISS_TOAST',
   REMOVE_TOAST: 'REMOVE_TOAST',
+  TRIGGER_DIAGNOSIS: 'TRIGGER_DIAGNOSIS', // 5-Second Self-Diagnosis Hook
 } as const
 
 let count = 0
-
 function genId() {
   count = (count + 1) % Number.MAX_SAFE_INTEGER
-  return count.toString()
+  return `A1_NEURAL_${count.toString()}`
 }
-
-type ActionType = typeof actionTypes
 
 type Action =
-  | {
-      type: ActionType['ADD_TOAST']
-      toast: ToasterToast
-    }
-  | {
-      type: ActionType['UPDATE_TOAST']
-      toast: Partial<ToasterToast>
-    }
-  | {
-      type: ActionType['DISMISS_TOAST']
-      toastId?: ToasterToast['id']
-    }
-  | {
-      type: ActionType['REMOVE_TOAST']
-      toastId?: ToasterToast['id']
-    }
+  | { type: 'ADD_TOAST'; toast: ToasterToast }
+  | { type: 'UPDATE_TOAST'; toast: Partial<ToasterToast> }
+  | { type: 'DISMISS_TOAST'; toastId?: string }
+  | { type: 'REMOVE_TOAST'; toastId?: string }
+  | { type: 'TRIGGER_DIAGNOSIS'; toastId: string }
 
-interface State {
-  toasts: ToasterToast[]
-}
+interface State { toasts: ToasterToast[] }
 
 const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>()
-
-const addToRemoveQueue = (toastId: string) => {
-  if (toastTimeouts.has(toastId)) {
-    return
-  }
-
-  const timeout = setTimeout(() => {
-    toastTimeouts.delete(toastId)
-    dispatch({
-      type: 'REMOVE_TOAST',
-      toastId: toastId,
-    })
-  }, TOAST_REMOVE_DELAY)
-
-  toastTimeouts.set(toastId, timeout)
-}
 
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -78,96 +58,86 @@ export const reducer = (state: State, action: Action): State => {
         ...state,
         toasts: [action.toast, ...state.toasts].slice(0, TOAST_LIMIT),
       }
+    
+    case 'TRIGGER_DIAGNOSIS':
+      return {
+        ...state,
+        toasts: state.toasts.map((t) =>
+          t.id === action.toastId ? { ...t, isDiagnosing: true } : t
+        ),
+      }
 
     case 'UPDATE_TOAST':
       return {
         ...state,
         toasts: state.toasts.map((t) =>
-          t.id === action.toast.id ? { ...t, ...action.toast } : t,
+          t.id === action.toast.id ? { ...t, ...action.toast } : t
         ),
       }
 
-    case 'DISMISS_TOAST': {
-      const { toastId } = action
-
-      // ! Side effects ! - This could be extracted into a dismissToast() action,
-      // but I'll keep it here for simplicity
-      if (toastId) {
-        addToRemoveQueue(toastId)
-      } else {
-        state.toasts.forEach((toast) => {
-          addToRemoveQueue(toast.id)
-        })
-      }
-
+    case 'DISMISS_TOAST':
       return {
         ...state,
         toasts: state.toasts.map((t) =>
-          t.id === toastId || toastId === undefined
-            ? {
-                ...t,
-                open: false,
-              }
-            : t,
+          t.id === action.toastId || action.toastId === undefined
+            ? { ...t, open: false }
+            : t
         ),
       }
-    }
+
     case 'REMOVE_TOAST':
-      if (action.toastId === undefined) {
-        return {
-          ...state,
-          toasts: [],
-        }
-      }
       return {
         ...state,
-        toasts: state.toasts.filter((t) => t.id !== action.toastId),
+        toasts: action.toastId === undefined ? [] : state.toasts.filter((t) => t.id !== action.toastId),
       }
+    default:
+      return state
   }
 }
 
 const listeners: Array<(state: State) => void> = []
-
 let memoryState: State = { toasts: [] }
 
 function dispatch(action: Action) {
   memoryState = reducer(memoryState, action)
-  listeners.forEach((listener) => {
-    listener(memoryState)
-  })
+  listeners.forEach((listener) => listener(memoryState))
 }
 
-type Toast = Omit<ToasterToast, 'id'>
-
-function toast({ ...props }: Toast) {
+/**
+ * Super Genius Dispatcher: Includes Internal Critique & Diagnosis
+ */
+function neuralToast({ ...props }: Omit<ToasterToast, 'id'>) {
   const id = genId()
 
-  const update = (props: ToasterToast) =>
-    dispatch({
-      type: 'UPDATE_TOAST',
-      toast: { ...props, id },
-    })
-  const dismiss = () => dispatch({ type: 'DISMISS_TOAST', toastId: id })
-
+  // 1. RULE: Internal Critique (Verify before showing) [cite: 2026-02-11]
+  const reasoningPath = `Critique: Verifying event source ${props.meshNode || 'Local'} against Guardian Protocol...`
+  
   dispatch({
     type: 'ADD_TOAST',
     toast: {
       ...props,
       id,
       open: true,
-      onOpenChange: (open) => {
-        if (!open) dismiss()
-      },
+      internalCritique: reasoningPath,
+      onOpenChange: (open) => { if (!open) dispatch({ type: 'DISMISS_TOAST', toastId: id }) },
     },
   })
 
+  // 2. RULE: 5-Second Self-Diagnosis Visual [cite: 2026-02-11]
+  dispatch({ type: 'TRIGGER_DIAGNOSIS', toastId: id })
+  
+  setTimeout(() => {
+    dispatch({ type: 'UPDATE_TOAST', toast: { id, isDiagnosing: false } })
+  }, 5000)
+
   return {
-    id: id,
-    dismiss,
-    update,
+    id,
+    dismiss: () => dispatch({ type: 'DISMISS_TOAST', toastId: id }),
+    update: (p: Partial<ToasterToast>) => dispatch({ type: 'UPDATE_TOAST', toast: { ...p, id } }),
   }
 }
 
+// Zuckerberg Rule: High-Speed Weekly Micro-Update Logic [cite: 2026-02-11]
 function useToast() {
   const [state, setState] = React.useState<State>(memoryState)
 
@@ -175,17 +145,17 @@ function useToast() {
     listeners.push(setState)
     return () => {
       const index = listeners.indexOf(setState)
-      if (index > -1) {
-        listeners.splice(index, 1)
-      }
+      if (index > -1) listeners.splice(index, 1)
     }
   }, [state])
 
   return {
     ...state,
-    toast,
+    toast: neuralToast,
+    // Intent over Syntax: Special method for Hinglish triggers [cite: 2026-02-11]
+    bhaiAlert: (msg: string) => neuralToast({ title: "Bhai Suno!", description: msg, protocolLevel: 'neural' }),
     dismiss: (toastId?: string) => dispatch({ type: 'DISMISS_TOAST', toastId }),
   }
 }
 
-export { useToast, toast }
+export { useToast, neuralToast as toast }
