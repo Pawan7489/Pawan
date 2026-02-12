@@ -1,195 +1,131 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useMemo } from "react";
 
-export type HoloState = "idle" | "listening" | "thinking" | "happy" | "calm" | "danger";
+// Project A1: Expanded States for Super Genius Logic [cite: 2026-02-11]
+export type HoloState = 
+  | "diagnosing"    // 5-Second Self-Diagnosis Protocol
+  | "registry_sync" // Master Blueprint Registry scan
+  | "expert_council"// Council of Experts discussion
+  | "thinking"      // Internal Reasoning Path processing
+  | "solo_mode"     // Operating with missing modules
+  | "guardian_check"// Ethical Hard-Coding verification
+  | "danger"        // Kill Switch or System Overheat
+  | "idle" | "listening" | "happy" | "calm";
 
 interface HologramProps {
   state: HoloState;
   isSpeaking: boolean;
-  size?: "sm" | "md" | "lg";
-  whisperMode?: boolean;
+  cpuUsage?: number; // Musk Rule: Output monitoring [cite: 2026-02-11]
+  isEncapsulated?: boolean; // Ball-in-Ball Rule [cite: 2026-02-11]
 }
 
-const stateColors: Record<HoloState, { core: string; glow: string; ring: string }> = {
-  idle: {
-    core: "#3b82f6",
-    glow: "rgba(59, 130, 246, 0.2)",
-    ring: "rgba(59, 130, 246, 0.15)",
-  },
-  listening: {
-    core: "#22c55e",
-    glow: "rgba(34, 197, 94, 0.2)",
-    ring: "rgba(34, 197, 94, 0.15)",
-  },
-  thinking: {
-    core: "#e2e8f0",
-    glow: "rgba(226, 232, 240, 0.15)",
-    ring: "rgba(226, 232, 240, 0.1)",
-  },
-  happy: {
-    core: "#f59e0b",
-    glow: "rgba(245, 158, 11, 0.2)",
-    ring: "rgba(245, 158, 11, 0.15)",
-  },
-  calm: {
-    core: "#a855f7",
-    glow: "rgba(168, 85, 247, 0.2)",
-    ring: "rgba(168, 85, 247, 0.15)",
-  },
-  danger: {
-    core: "#ef4444",
-    glow: "rgba(239, 68, 68, 0.25)",
-    ring: "rgba(239, 68, 68, 0.15)",
-  },
+const stateColors: Record<HoloState, { core: string; glow: string; ring: string; label: string }> = {
+  diagnosing: { core: "#60a5fa", glow: "rgba(96, 165, 250, 0.3)", ring: "rgba(96, 165, 250, 0.2)", label: "Self-Diagnosis" },
+  registry_sync: { core: "#34d399", glow: "rgba(52, 211, 153, 0.3)", ring: "rgba(52, 211, 153, 0.2)", label: "Registry Sync" },
+  expert_council: { core: "#f472b6", glow: "rgba(244, 114, 182, 0.3)", ring: "rgba(244, 114, 182, 0.2)", label: "Expert Council" },
+  thinking: { core: "#e2e8f0", glow: "rgba(226, 232, 240, 0.2)", ring: "rgba(226, 232, 240, 0.1)", label: "Reasoning Path" },
+  solo_mode: { core: "#fbbf24", glow: "rgba(251, 191, 36, 0.3)", ring: "rgba(251, 191, 36, 0.2)", label: "Solo Mode" },
+  guardian_check: { core: "#818cf8", glow: "rgba(129, 140, 248, 0.3)", ring: "rgba(129, 140, 248, 0.2)", label: "Guardian Protocol" },
+  danger: { core: "#ef4444", glow: "rgba(239, 68, 68, 0.4)", ring: "rgba(239, 68, 68, 0.3)", label: "System Freeze" },
+  idle: { core: "#3b82f6", glow: "rgba(59, 130, 246, 0.2)", ring: "rgba(59, 130, 246, 0.15)", label: "Ready" },
+  listening: { core: "#10b981", glow: "rgba(16, 185, 129, 0.3)", ring: "rgba(16, 185, 129, 0.2)", label: "Listening" },
+  happy: { core: "#fb923c", glow: "rgba(251, 146, 60, 0.3)", ring: "rgba(251, 146, 60, 0.2)", label: "Delighted" },
+  calm: { core: "#c084fc", glow: "rgba(192, 132, 252, 0.3)", ring: "rgba(192, 132, 252, 0.2)", label: "Soothing" },
 };
 
-const sizeMap = { sm: 80, md: 140, lg: 200 };
-
-export function Hologram({
-  state,
-  isSpeaking,
-  size = "md",
-  whisperMode = false,
-}: HologramProps) {
+export function Hologram({ state, isSpeaking, cpuUsage = 0, isEncapsulated = true }: HologramProps) {
   const colors = stateColors[state];
-  const s = sizeMap[size];
-  const opacity = whisperMode ? 0.5 : 1;
+  const s = 160; // Optimized size for mobile-first scalability [cite: 2026-02-11]
 
-  const orbitParticles = useMemo(
-    () =>
-      Array.from({ length: 8 }, (_, i) => ({
-        id: i,
-        angle: (360 / 8) * i,
-        radius: s * 0.45,
-        size: 2 + Math.random() * 2,
-        delay: i * 0.3,
-      })),
-    [s]
-  );
+  // Musk Rule: Maximize efficiency by pre-calculating orbit [cite: 2026-02-11]
+  const particles = useMemo(() => 
+    Array.from({ length: state === "expert_council" ? 12 : 6 }, (_, i) => ({
+      id: i,
+      delay: i * 0.2,
+      duration: state === "thinking" ? 2 : 4
+    })), [state]);
 
   return (
-    <div
-      className="relative flex items-center justify-center"
-      style={{ width: s, height: s, opacity }}
-    >
-      {/* Outer glow pulse rings */}
-      {[0, 1, 2].map((i) => (
-        <motion.div
-          key={`ring-${i}`}
-          className="absolute rounded-full"
-          style={{
-            width: s * (0.7 + i * 0.25),
-            height: s * (0.7 + i * 0.25),
-            border: `1px solid ${colors.ring}`,
-          }}
-          animate={{
-            scale: [1, 1.15, 1],
-            opacity: [0.3, 0.05, 0.3],
-          }}
-          transition={{
-            duration: 3 + i,
-            repeat: Number.POSITIVE_INFINITY,
-            delay: i * 0.5,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-
-      {/* Orbiting particles */}
-      {orbitParticles.map((p) => (
-        <motion.div
-          key={`orbit-${p.id}`}
-          className="absolute rounded-full"
-          style={{
-            width: p.size,
-            height: p.size,
-            background: colors.core,
-            opacity: 0.6,
-          }}
-          animate={{
-            rotate: [p.angle, p.angle + 360],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Number.POSITIVE_INFINITY,
-            ease: "linear",
-            delay: p.delay,
-          }}
-          // position it on the orbit ring
-          // use a wrapper
-        >
+    <div className="relative flex items-center justify-center select-none" style={{ width: s, height: s }}>
+      
+      {/* Ball-in-Ball Rule: Layered Encapsulation [cite: 2026-02-11] */}
+      <AnimatePresence>
+        {[0, 1, 2].map((i) => (
           <motion.div
-            className="absolute rounded-full"
-            style={{
-              width: p.size,
-              height: p.size,
-              background: colors.core,
-              left: p.radius,
-              opacity: 0.4,
+            key={`layer-${i}`}
+            className="absolute rounded-full border border-dashed"
+            style={{ 
+              width: s * (0.6 + i * 0.2), 
+              height: s * (0.6 + i * 0.2), 
+              borderColor: colors.ring,
+              opacity: isEncapsulated ? 1 : 0.2
             }}
-            animate={{ opacity: [0.2, 0.7, 0.2] }}
-            transition={{
-              duration: 2,
-              repeat: Number.POSITIVE_INFINITY,
-              delay: p.delay,
-            }}
+            animate={{ rotate: i % 2 === 0 ? 360 : -360 }}
+            transition={{ duration: 10 + i * 5, repeat: Infinity, ease: "linear" }}
           />
+        ))}
+      </AnimatePresence>
+
+      {/* Council of Experts: Multiple orbiting sub-nodes [cite: 2026-02-11] */}
+      {particles.map((p) => (
+        <motion.div
+          key={p.id}
+          className="absolute h-2 w-2 rounded-full shadow-lg"
+          style={{ background: colors.core }}
+          animate={{
+            rotate: 360,
+            scale: isSpeaking ? [1, 1.5, 1] : 1
+          }}
+          transition={{
+            rotate: { duration: p.duration, repeat: Infinity, ease: "linear", delay: p.delay },
+            scale: { duration: 0.5, repeat: isSpeaking ? Infinity : 0 }
+          }}
+        >
+          <div className="absolute top-10 h-1 w-1 rounded-full bg-inherit opacity-50" />
         </motion.div>
       ))}
 
-      {/* Inner glow background */}
+      {/* Core Brain: With Internal Critique Pulse [cite: 2026-02-11] */}
       <motion.div
-        className="absolute rounded-full"
+        className="relative z-10 rounded-full flex items-center justify-center shadow-2xl"
         style={{
-          width: s * 0.6,
-          height: s * 0.6,
-          background: `radial-gradient(circle, ${colors.glow}, transparent 70%)`,
+          width: s * 0.35,
+          height: s * 0.35,
+          background: `radial-gradient(circle at 30% 30%, ${colors.core}, ${colors.core}aa)`,
+          boxShadow: `0 0 40px ${colors.glow}, inset 0 0 10px rgba(255,255,255,0.2)`
         }}
         animate={{
-          scale: isSpeaking ? [1, 1.3, 0.95, 1.2, 1] : [1, 1.1, 1],
+          scale: state === "diagnosing" ? [1, 1.1, 1] : isSpeaking ? [1, 1.25, 0.95, 1.1, 1] : [1, 1.05, 1],
+          opacity: state === "danger" ? [1, 0.3, 1] : 1
         }}
-        transition={{
-          duration: isSpeaking ? 0.5 : 3,
-          repeat: Number.POSITIVE_INFINITY,
-          ease: "easeInOut",
-        }}
-      />
-
-      {/* Core sphere */}
-      <motion.div
-        className="relative rounded-full"
-        style={{
-          width: s * 0.3,
-          height: s * 0.3,
-          background: `radial-gradient(circle at 35% 35%, ${colors.core}cc, ${colors.core}33 80%)`,
-          boxShadow: `0 0 ${s * 0.3}px ${colors.glow}, 0 0 ${s * 0.6}px ${colors.glow}, inset 0 0 ${s * 0.15}px rgba(255,255,255,0.1)`,
-        }}
-        animate={{
-          scale: isSpeaking ? [1, 1.15, 0.92, 1.1, 1] : [1, 1.05, 1],
-        }}
-        transition={{
-          duration: isSpeaking ? 0.4 : 2.5,
-          repeat: Number.POSITIVE_INFINITY,
-          ease: "easeInOut",
-        }}
-      />
-
-      {/* State label */}
-      <motion.span
-        className="absolute -bottom-5 text-[10px] font-mono uppercase tracking-widest"
-        style={{ color: colors.core }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.7 }}
+        transition={{ duration: isSpeaking ? 0.4 : 2, repeat: Infinity }}
       >
-        {state === "idle" && "Ready"}
-        {state === "listening" && "Listening"}
-        {state === "thinking" && "Processing"}
-        {state === "happy" && "Delighted"}
-        {state === "calm" && "Soothing"}
-        {state === "danger" && "Blocked"}
-      </motion.span>
+        {/* Hidden Reasoning Path: Subtle inner lines [cite: 2026-02-11] */}
+        {state === "thinking" && (
+          <motion.div 
+            className="absolute inset-2 border-t border-white/20 rounded-full"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          />
+        )}
+      </motion.div>
+
+      {/* Neural Status Label */}
+      <div className="absolute -bottom-8 flex flex-col items-center">
+        <motion.span 
+          className="text-[10px] font-black uppercase tracking-[0.2em]"
+          style={{ color: colors.core, textShadow: `0 0 10px ${colors.glow}` }}
+        >
+          {colors.label}
+        </motion.span>
+        {cpuUsage > 0 && (
+          <span className="text-[8px] text-white/40 mt-1 font-mono">Load: {cpuUsage}%</span>
+        )}
+      </div>
+
     </div>
   );
-}
+          }
+            
