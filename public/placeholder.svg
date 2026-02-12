@@ -1,1 +1,59 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" fill="none"><rect width="1200" height="1200" fill="#EAEAEA" rx="3"/><g opacity=".5"><g opacity=".5"><path fill="#FAFAFA" d="M600.709 736.5c-75.454 0-136.621-61.167-136.621-136.62 0-75.454 61.167-136.621 136.621-136.621 75.453 0 136.62 61.167 136.62 136.621 0 75.453-61.167 136.62-136.62 136.62Z"/><path stroke="#C9C9C9" stroke-width="2.418" d="M600.709 736.5c-75.454 0-136.621-61.167-136.621-136.62 0-75.454 61.167-136.621 136.621-136.621 75.453 0 136.62 61.167 136.62 136.621 0 75.453-61.167 136.62-136.62 136.62Z"/></g><path stroke="url(#a)" stroke-width="2.418" d="M0-1.209h553.581" transform="scale(1 -1) rotate(45 1163.11 91.165)"/><path stroke="url(#b)" stroke-width="2.418" d="M404.846 598.671h391.726"/><path stroke="url(#c)" stroke-width="2.418" d="M599.5 795.742V404.017"/><path stroke="url(#d)" stroke-width="2.418" d="m795.717 796.597-391.441-391.44"/><path fill="#fff" d="M600.709 656.704c-31.384 0-56.825-25.441-56.825-56.824 0-31.384 25.441-56.825 56.825-56.825 31.383 0 56.824 25.441 56.824 56.825 0 31.383-25.441 56.824-56.824 56.824Z"/><g clip-path="url(#e)"><path fill="#666" fill-rule="evenodd" d="M616.426 586.58h-31.434v16.176l3.553-3.554.531-.531h9.068l.074-.074 8.463-8.463h2.565l7.18 7.181V586.58Zm-15.715 14.654 3.698 3.699 1.283 1.282-2.565 2.565-1.282-1.283-5.2-5.199h-6.066l-5.514 5.514-.073.073v2.876a2.418 2.418 0 0 0 2.418 2.418h26.598a2.418 2.418 0 0 0 2.418-2.418v-8.317l-8.463-8.463-7.181 7.181-.071.072Zm-19.347 5.442v4.085a6.045 6.045 0 0 0 6.046 6.045h26.598a6.044 6.044 0 0 0 6.045-6.045v-7.108l1.356-1.355-1.282-1.283-.074-.073v-17.989h-38.689v23.43l-.146.146.146.147Z" clip-rule="evenodd"/></g><path stroke="#C9C9C9" stroke-width="2.418" d="M600.709 656.704c-31.384 0-56.825-25.441-56.825-56.824 0-31.384 25.441-56.825 56.825-56.825 31.383 0 56.824 25.441 56.824 56.825 0 31.383-25.441 56.824-56.824 56.824Z"/></g><defs><linearGradient id="a" x1="554.061" x2="-.48" y1=".083" y2=".087" gradientUnits="userSpaceOnUse"><stop stop-color="#C9C9C9" stop-opacity="0"/><stop offset=".208" stop-color="#C9C9C9"/><stop offset=".792" stop-color="#C9C9C9"/><stop offset="1" stop-color="#C9C9C9" stop-opacity="0"/></linearGradient><linearGradient id="b" x1="796.912" x2="404.507" y1="599.963" y2="599.965" gradientUnits="userSpaceOnUse"><stop stop-color="#C9C9C9" stop-opacity="0"/><stop offset=".208" stop-color="#C9C9C9"/><stop offset=".792" stop-color="#C9C9C9"/><stop offset="1" stop-color="#C9C9C9" stop-opacity="0"/></linearGradient><linearGradient id="c" x1="600.792" x2="600.794" y1="403.677" y2="796.082" gradientUnits="userSpaceOnUse"><stop stop-color="#C9C9C9" stop-opacity="0"/><stop offset=".208" stop-color="#C9C9C9"/><stop offset=".792" stop-color="#C9C9C9"/><stop offset="1" stop-color="#C9C9C9" stop-opacity="0"/></linearGradient><linearGradient id="d" x1="404.85" x2="796.972" y1="403.903" y2="796.02" gradientUnits="userSpaceOnUse"><stop stop-color="#C9C9C9" stop-opacity="0"/><stop offset=".208" stop-color="#C9C9C9"/><stop offset=".792" stop-color="#C9C9C9"/><stop offset="1" stop-color="#C9C9C9" stop-opacity="0"/></linearGradient><clipPath id="e"><path fill="#fff" d="M581.364 580.535h38.689v38.689h-38.689z"/></clipPath></defs></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200" fill="none">
+  <rect width="1200" height="1200" fill="#080c14" rx="20"/>
+  
+  <defs>
+    <linearGradient id="floor-fade" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00d4ff" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#00d4ff" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#00d4ff" stop-opacity="0.8"/>
+    </linearGradient>
+    
+    <linearGradient id="token-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2ff" />
+      <stop offset="100%" stop-color="#bd00ff" />
+    </linearGradient>
+
+    <filter id="web3-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <path d="M-200 1200 L600 600 L1400 1200" stroke="url(#floor-fade)" stroke-width="2" fill="url(#floor-fade)" opacity="0.2"/>
+  <line x1="100" y1="1200" x2="600" y2="600" stroke="#00d4ff" stroke-width="1" opacity="0.2"/>
+  <line x1="1100" y1="1200" x2="600" y2="600" stroke="#00d4ff" stroke-width="1" opacity="0.2"/>
+
+  <g transform="translate(600, 550)">
+    <animateTransform attributeName="transform" type="translate" values="600,550; 600,530; 600,550" dur="4s" repeatCount="indefinite" />
+
+    <path d="M-100 -50 L100 -50 L100 150 L-100 150 Z" fill="none" stroke="#7a00ff" stroke-width="2" stroke-dasharray="10 10" opacity="0.3"/>
+    
+    <g filter="url(#web3-glow)">
+      <path d="M0 -150 L-130 -50 L0 50 L130 -50 Z" fill="url(#token-grad)" opacity="0.8" stroke="white" stroke-width="2"/>
+      <path d="M-130 -50 L-130 150 L0 250 L0 50 Z" fill="url(#token-grad)" opacity="0.5" stroke="white" stroke-width="2"/>
+      <path d="M130 -50 L130 150 L0 250 L0 50 Z" fill="#00d4ff" opacity="0.6" stroke="white" stroke-width="2"/>
+    </g>
+
+    <circle cx="-160" cy="0" r="5" fill="#fff">
+      <animate attributeName="cy" values="0;-20;0" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="160" cy="100" r="8" fill="#fff">
+      <animate attributeName="cy" values="100;120;100" dur="3s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <g transform="translate(400, 950)">
+    <rect x="0" y="0" width="400" height="6" fill="#1a1a1a" rx="3"/>
+    <rect x="0" y="0" width="100" height="6" fill="url(#token-grad)" rx="3">
+      <animate attributeName="width" values="0;400" dur="2s" repeatCount="indefinite" />
+    </rect>
+  </g>
+
+  <text x="600" y="900" font-family="Courier New, monospace" font-size="30" fill="#fff" text-anchor="middle" letter-spacing="4">
+    <tspan fill="#00d4ff">WEB3</tspan> ASSET DETECTED
+  </text>
+  
+  <text x="600" y="1050" font-family="Arial, sans-serif" font-size="20" fill="#7a00ff" text-anchor="middle" opacity="0.7">
+    HASH: 0x9f...3a2 | VERIFYING ON CHAIN...
+  </text>
+</svg>
