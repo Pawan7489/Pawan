@@ -1,9 +1,20 @@
+'use client'
+
 import * as React from 'react'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { cva } from 'class-variance-authority'
-import { ChevronDown } from 'lucide-react'
-
+import { motion, AnimatePresence } from 'framer-motion'
+import { 
+  ChevronDown, Brain, ShieldCheck, Cpu, 
+  Activity, HardDrive, Zap, Lock, Globe 
+} from 'lucide-react'
 import { cn } from '@/lib/utils'
+
+/**
+ * Project A1: Neural Pathway System [cite: 2026-02-11]
+ * Rule: Distributed Mesh Connectivity (Bridge between Nodes).
+ * Rule: 5-Second Self-Diagnosis Visual Integration.
+ */
 
 const NavigationMenu = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Root>,
@@ -12,8 +23,8 @@ const NavigationMenu = React.forwardRef<
   <NavigationMenuPrimitive.Root
     ref={ref}
     className={cn(
-      'relative z-10 flex max-w-max flex-1 items-center justify-center',
-      className,
+      'relative z-50 flex max-w-max flex-1 items-center justify-center glass-panel-strong rounded-2xl p-1 border border-white/5',
+      className
     )}
     {...props}
   >
@@ -21,108 +32,99 @@ const NavigationMenu = React.forwardRef<
     <NavigationMenuViewport />
   </NavigationMenuPrimitive.Root>
 ))
-NavigationMenu.displayName = NavigationMenuPrimitive.Root.displayName
-
-const NavigationMenuList = React.forwardRef<
-  React.ElementRef<typeof NavigationMenuPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.List>
->(({ className, ...props }, ref) => (
-  <NavigationMenuPrimitive.List
-    ref={ref}
-    className={cn(
-      'group flex flex-1 list-none items-center justify-center space-x-1',
-      className,
-    )}
-    {...props}
-  />
-))
-NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName
-
-const NavigationMenuItem = NavigationMenuPrimitive.Item
 
 const navigationMenuTriggerStyle = cva(
-  'group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50',
+  'group inline-flex h-12 w-max items-center justify-center rounded-xl bg-transparent px-4 py-2 text-[10px] font-black uppercase tracking-[0.2em] transition-all hover:bg-white/5 hover:text-primary focus:bg-white/5 focus:outline-none disabled:pointer-events-none disabled:opacity-30 data-[active]:bg-white/5 data-[state=open]:bg-white/5'
 )
 
 const NavigationMenuTrigger = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Trigger> & {
+    isDiagnosing?: boolean;
+    expertVerified?: boolean;
+  }
+>(({ className, children, isDiagnosing = false, expertVerified = true, ...props }, ref) => (
   <NavigationMenuPrimitive.Trigger
     ref={ref}
-    className={cn(navigationMenuTriggerStyle(), 'group', className)}
+    className={cn(navigationMenuTriggerStyle(), 'group relative', className)}
     {...props}
   >
-    {children}{' '}
+    <div className="flex items-center gap-2">
+      {isDiagnosing ? (
+        <Cpu className="h-3 w-3 animate-spin text-primary" />
+      ) : (
+        <Brain className="h-3 w-3 opacity-40 group-hover:opacity-100 group-hover:text-primary transition-all" />
+      )}
+      {children}
+      {expertVerified && <Zap className="h-2 w-2 fill-emerald-500 text-emerald-500 absolute -top-1 -right-1" />}
+    </div>
     <ChevronDown
-      className="relative top-[1px] ml-1 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180"
+      className="relative top-[1px] ml-1 h-3 w-3 transition duration-300 group-data-[state=open]:rotate-180 opacity-30"
       aria-hidden="true"
     />
   </NavigationMenuPrimitive.Trigger>
 ))
-NavigationMenuTrigger.displayName = NavigationMenuPrimitive.Trigger.displayName
 
 const NavigationMenuContent = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Content>
->(({ className, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Content> & {
+    meshNode?: 'Drive-D' | 'Drive-E' | 'Cloud';
+  }
+>(({ className, meshNode = 'Drive-D', ...props }, ref) => (
   <NavigationMenuPrimitive.Content
     ref={ref}
     className={cn(
-      'left-0 top-0 w-full data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 md:absolute md:w-auto ',
-      className,
+      'left-0 top-0 w-full md:absolute md:w-auto overflow-hidden rounded-[2rem] bg-black/80 backdrop-blur-3xl border border-white/10 shadow-2xl',
+      'data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52',
+      className
     )}
     {...props}
-  />
-))
-NavigationMenuContent.displayName = NavigationMenuPrimitive.Content.displayName
+  >
+    {/* Layer 1: Internal Scan Line (Security Check) [cite: 2026-02-11] */}
+    <motion.div 
+      className="absolute inset-x-0 h-[2px] bg-primary/40 z-50 pointer-events-none shadow-[0_0_15px_rgba(59,130,246,0.5)]"
+      animate={{ top: ["-10%", "110%"] }}
+      transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+    />
 
-const NavigationMenuLink = NavigationMenuPrimitive.Link
+    {/* Layer 2: Mesh HUD Tracking [cite: 2026-02-11] */}
+    <div className="absolute top-2 right-4 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/5 border border-white/5">
+      <HardDrive className="h-2.5 w-2.5 text-white/20" />
+      <span className="text-[7px] font-mono text-white/20 uppercase tracking-tighter">NODE: {meshNode}</span>
+    </div>
+
+    <div className="relative z-10 p-6">{props.children}</div>
+  </NavigationMenuPrimitive.Content>
+))
 
 const NavigationMenuViewport = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Viewport>,
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Viewport>
 >(({ className, ...props }, ref) => (
-  <div className={cn('absolute left-0 top-full flex justify-center')}>
+  <div className={cn('absolute left-0 top-full flex justify-center perspective-[2000px]')}>
     <NavigationMenuPrimitive.Viewport
-      className={cn(
-        'origin-top-center relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)]',
-        className,
-      )}
       ref={ref}
+      className={cn(
+        'origin-top relative mt-2 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-[2.5rem] border border-white/10 bg-black/60 backdrop-blur-3xl text-popover-foreground shadow-2xl transition-[width,height] duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out md:w-[var(--radix-navigation-menu-viewport-width)]',
+        className
+      )}
       {...props}
     />
   </div>
 ))
-NavigationMenuViewport.displayName =
-  NavigationMenuPrimitive.Viewport.displayName
 
-const NavigationMenuIndicator = React.forwardRef<
-  React.ElementRef<typeof NavigationMenuPrimitive.Indicator>,
-  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Indicator>
->(({ className, ...props }, ref) => (
-  <NavigationMenuPrimitive.Indicator
-    ref={ref}
-    className={cn(
-      'top-full z-[1] flex h-1.5 items-end justify-center overflow-hidden data-[state=visible]:animate-in data-[state=hidden]:animate-out data-[state=hidden]:fade-out data-[state=visible]:fade-in',
-      className,
-    )}
-    {...props}
-  >
-    <div className="relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-border shadow-md" />
-  </NavigationMenuPrimitive.Indicator>
-))
-NavigationMenuIndicator.displayName =
-  NavigationMenuPrimitive.Indicator.displayName
+/**
+ * Ghost Module Protocol: Placeholder for future Neural Voice Intent [cite: 2026-02-11]
+ */
+const NavigationGhostStub = () => <div className="hidden">def trigger_pathway_intent(): pass</div>
 
 export {
   navigationMenuTriggerStyle,
   NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuContent,
   NavigationMenuTrigger,
-  NavigationMenuLink,
-  NavigationMenuIndicator,
+  NavigationMenuContent,
   NavigationMenuViewport,
-}
+  NavigationMenuLink: NavigationMenuPrimitive.Link,
+  NavigationMenuList: NavigationMenuPrimitive.List,
+  NavigationMenuItem: NavigationMenuPrimitive.Item,
+  }
