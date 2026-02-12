@@ -1,22 +1,81 @@
 {
-  "name": "Project A1 - Digital Companion",
-  "short_name": "A1",
-  "description": "Your emotionally intelligent AI companion that adapts to you. Made in India.",
+  "name": "A1 Super Genius - Quantum Core",
+  "short_name": "A1 Core",
+  "id": "a1-super-genius-ai",
+  "description": "Advanced Emotionally Intelligent AI. Self-Healing, Distributed Mesh, and Adaptive Logic. Made in India.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#050505",
-  "theme_color": "#050505",
-  "orientation": "portrait",
+  "display_override": ["window-controls-overlay", "minimal-ui"],
+  "background_color": "#020024",
+  "theme_color": "#00d4ff",
+  "orientation": "any",
+  "categories": [
+    "productivity",
+    "utilities",
+    "artificial-intelligence",
+    "education"
+  ],
   "icons": [
     {
-      "src": "/icon-192.png",
+      "src": "/icons/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "/icon-512.png",
+      "src": "/icons/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Quick Diagnosis",
+      "short_name": "Health Check",
+      "description": "Run 5-second system self-test",
+      "url": "/diagnosis",
+      "icons": [{ "src": "/icons/shield-check.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Voice Command",
+      "short_name": "Speak",
+      "description": "Talk to A1 directly",
+      "url": "/voice",
+      "icons": [{ "src": "/icons/mic.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "New Project",
+      "short_name": "Create",
+      "description": "Start a new coding task",
+      "url": "/new-task",
+      "icons": [{ "src": "/icons/plus.png", "sizes": "96x96" }]
+    }
+  ],
+  "share_target": {
+    "action": "/share-handler",
+    "method": "GET",
+    "enctype": "application/x-www-form-urlencoded",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop-dashboard.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "A1 Quantum Dashboard"
+    },
+    {
+      "src": "/screenshots/mobile-chat.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile Interface"
     }
   ]
 }
