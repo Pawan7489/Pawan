@@ -4,123 +4,113 @@
 
 @layer base {
   :root {
-    --background: 0 0% 2%;
-    --foreground: 210 20% 92%;
-    --card: 220 15% 6%;
-    --card-foreground: 210 20% 92%;
-    --popover: 220 15% 6%;
-    --popover-foreground: 210 20% 92%;
-    --primary: 199 89% 48%;
-    --primary-foreground: 0 0% 2%;
-    --secondary: 220 10% 12%;
-    --secondary-foreground: 210 20% 85%;
-    --muted: 220 10% 14%;
-    --muted-foreground: 215 10% 55%;
-    --accent: 199 89% 48%;
-    --accent-foreground: 0 0% 2%;
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 220 10% 16%;
-    --input: 220 10% 16%;
-    --ring: 199 89% 48%;
-    --radius: 0.75rem;
-    --chart-1: 199 89% 48%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    --sidebar-background: 220 15% 5%;
-    --sidebar-foreground: 210 20% 92%;
-    --sidebar-primary: 199 89% 48%;
-    --sidebar-primary-foreground: 0 0% 2%;
-    --sidebar-accent: 220 10% 12%;
-    --sidebar-accent-foreground: 210 20% 92%;
-    --sidebar-border: 220 10% 16%;
-    --sidebar-ring: 199 89% 48%;
+    /* Rule: deep-black base for maximum OLED power efficiency (Musk Rule) */
+    --background: 240 10% 2%;
+    --foreground: 210 20% 98%;
+    
+    /* Layer 1: The Core Logic Colors [cite: 2026-02-11] */
+    --primary: 217 91% 60%; /* Neural Blue */
+    --primary-foreground: 210 20% 98%;
+    
+    /* Guardian Protocol Colors (Ethical Safety) [cite: 2026-02-11] */
+    --guardian: 142 71% 45%; /* Safe Emerald */
+    --diagnosis: 38 92% 50%; /* Amber Scan */
+    --omega: 0 84% 60%; /* Kill Switch Red */
+    
+    /* Mesh Node States (Distributed Execution) [cite: 2026-02-11] */
+    --mesh-d: 199 89% 48%; /* Drive D Sync */
+    --mesh-e: 262 83% 58%; /* Drive E Sync */
+    --mesh-cloud: 25 95% 53%; /* Cloud Sync */
 
-    --glass-bg: rgba(255, 255, 255, 0.04);
-    --glass-border: rgba(255, 255, 255, 0.08);
-    --glass-highlight: rgba(255, 255, 255, 0.06);
-
-    --holo-idle: #3b82f6;
-    --holo-listening: #22c55e;
-    --holo-thinking: #e2e8f0;
-    --holo-happy: #f59e0b;
-    --holo-calm: #a855f7;
-    --holo-danger: #ef4444;
+    --border: 240 5% 12%;
+    --input: 240 5% 12%;
+    --radius: 1.25rem; /* Rule: Rounded Ball-in-Ball Look */
+    
+    /* Glassmorphism Variables (Onion Architecture) */
+    --glass-opacity: 0.03;
+    --glass-blur: 40px;
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border selection:bg-primary/30 selection:text-primary;
   }
   body {
-    @apply bg-background text-foreground;
-    background-color: #050505;
+    @apply bg-background text-foreground antialiased;
+    /* Neural Grain Effect for High-Tech feel */
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.03) 0, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.03) 0, transparent 50%);
+    background-attachment: fixed;
   }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-  .glass-panel {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
-  }
-  .glass-panel-strong {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(60px);
-    -webkit-backdrop-filter: blur(60px);
-  }
-  .glow-blue {
-    box-shadow: 0 0 40px rgba(59, 130, 246, 0.15), 0 0 80px rgba(59, 130, 246, 0.05);
-  }
-  .glow-green {
-    box-shadow: 0 0 40px rgba(34, 197, 94, 0.15), 0 0 80px rgba(34, 197, 94, 0.05);
-  }
-  .glow-gold {
-    box-shadow: 0 0 40px rgba(245, 158, 11, 0.15), 0 0 80px rgba(245, 158, 11, 0.05);
-  }
-  .glow-purple {
-    box-shadow: 0 0 40px rgba(168, 85, 247, 0.15), 0 0 80px rgba(168, 85, 247, 0.05);
-  }
-  .glow-red {
-    box-shadow: 0 0 40px rgba(239, 68, 68, 0.2), 0 0 80px rgba(239, 68, 68, 0.1);
+  /* RULE: Ball-in-Ball (Onion Architecture) [cite: 2026-02-11] */
+  .glass-panel-onion {
+    background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(var(--glass-blur));
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
   }
 
-  .scrollbar-thin {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+  /* RULE: 5-Second Self-Diagnosis Visual [cite: 2026-02-11] */
+  .diagnosis-scan {
+    position: relative;
+    overflow: hidden;
   }
-  .scrollbar-thin::-webkit-scrollbar {
-    width: 4px;
+  .diagnosis-scan::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent, hsl(var(--diagnosis) / 0.1), transparent);
+    animation: scan-vertical 2s linear infinite;
   }
-  .scrollbar-thin::-webkit-scrollbar-track {
-    background: transparent;
+
+  /* Neural Glows (GPU Optimized using Opacity) [cite: 2026-02-11] */
+  .neural-glow-primary {
+    filter: drop-shadow(0 0 15px hsl(var(--primary) / 0.3));
   }
-  .scrollbar-thin::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 2px;
+  .neural-glow-guardian {
+    filter: drop-shadow(0 0 15px hsl(var(--guardian) / 0.3));
   }
+
+  /* Distributed Mesh Pulses [cite: 2026-02-11] */
+  .mesh-pulse-d { animation: pulse-mesh 3s infinite; color: hsl(var(--mesh-d)); }
+  .mesh-pulse-e { animation: pulse-mesh 3s infinite 1s; color: hsl(var(--mesh-e)); }
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
+/* HIGH-SPEED KEYFRAMES (Zuckerberg Rule) [cite: 2026-02-11] */
+
+@keyframes scan-vertical {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
 }
 
-@keyframes pulse-ring {
-  0% { transform: scale(0.8); opacity: 0.5; }
-  50% { transform: scale(1.2); opacity: 0; }
-  100% { transform: scale(0.8); opacity: 0.5; }
+@keyframes pulse-mesh {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); filter: brightness(1.2); }
 }
 
-@keyframes orbit {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+/* Neural Breathing effect for the entire Dashboard */
+@keyframes neural-breath {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
+
+/* Scrollbar: Project A1 Minimalist [cite: 2026-02-11] */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  transition: all 0.3s;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.4);
+  }
