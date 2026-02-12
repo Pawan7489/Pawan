@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Default - will be overridden by JS */
+    --primary-color: 217 91% 60%; 
+  }
+}
+
+body {
+  @apply bg-slate-950 text-slate-100;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Living Background Animation */
+.live-bg {
+  background: linear-gradient(-45deg, #02040a, #0f172a, #1e1b4b, #02040a);
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Glass Card Effect */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Neon Text Glow */
+.text-glow {
+  text-shadow: 0 0 10px rgba(var(--primary-color), 0.5);
+}
